@@ -30,6 +30,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('store', [CategoryController::class, 'store'])->name('store');
         // カテゴリー詳細画面
         Route::get('{categoryId}', [CategoryController::class, 'show'])->name('show');
+        // カテゴリー編集画面
+        Route::get('{categoryId}/edit', [CategoryController::class, 'edit'])->name('edit');
+        // カテゴリー更新処理
+        Route::post('{categoryId}/update', [CategoryController::class, 'update'])->name('update');
     });
 });
 
