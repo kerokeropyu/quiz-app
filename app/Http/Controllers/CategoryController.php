@@ -11,9 +11,10 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function top()
     {
-        //
+        $categories = Category::get();
+        return view('admin.top', compact('categories'));
     }
 
     /**
