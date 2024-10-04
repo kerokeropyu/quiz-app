@@ -43,7 +43,7 @@ class CategoryController extends Controller
      */
     public function show(Request $request, string $categoryId)
     {
-        $category = Category::findOrFail($categoryId);
+        $category = Category::with('quizzes')->findOrFail($categoryId);
         return view('admin.categories.show', compact('category'));
     }
 

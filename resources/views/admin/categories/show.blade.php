@@ -54,11 +54,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($categories as $category) --}}
+                        @forelse ($category->quizzes as $quiz)
                             <tr>
-                                <td class="px-4 py-3">1</td>
-                                <td class="px-4 py-3">PHPとは？</td>
-                                <td class="px-4 py-3">2024-10-10</td>
+                                <td class="px-4 py-3">{{ $quiz->id }}</td>
+                                <td class="px-4 py-3">{{ Str::limit($quiz->question, 10) }}</td>
+                                <td class="px-4 py-3">{{ $quiz->updated_at }}</td>
                                 <td class="px-4 py-3 text-lg text-gray-900">
                                     <button
                                         onclick="location.href='{{ route('admin.categories.show', ['categoryId' => $category->id]) }}'"
@@ -69,7 +69,13 @@
                                         class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">削除</button>
                                 </td>
                             </tr>
-                        {{-- @endforeach --}}
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-2 text-center h-20 align-middle">
+                                <span class="text-gray-500 text-lg">クイズがまだ登録されていません。</span>
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
