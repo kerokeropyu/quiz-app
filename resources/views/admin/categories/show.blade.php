@@ -65,16 +65,20 @@
                                         class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">編集</button>
                                 </td>
                                 <td class="px-4 py-3 text-lg text-gray-900">
-                                    <button
-                                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">削除</button>
+                                    <form method="post"
+                                        action="{{ route('admin.categories.quizzes.destroy', ['categoryId' => $category->id, 'quizId' => $quiz->id]) }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">削除</button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
-                        <tr>
-                            <td colspan="5" class="px-4 py-2 text-center h-20 align-middle">
-                                <span class="text-gray-500 text-lg">クイズがまだ登録されていません。</span>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="px-4 py-2 text-center h-20 align-middle">
+                                    <span class="text-gray-500 text-lg">クイズがまだ登録されていません。</span>
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
