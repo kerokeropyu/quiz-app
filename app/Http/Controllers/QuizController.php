@@ -66,17 +66,39 @@ class QuizController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Quiz $quiz)
+    public function edit(Request $request, string $categoryId, string $quizId)
     {
-        //
+
+        $quiz = Quiz::with('category', 'options')->findOrFail($quizId);
+        return view('admin.quizzes.edit', compact('quiz'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateQuizRequest $request, Quiz $quiz)
+    public function update(UpdateQuizRequest $request, string $categoryId, string $quizId)
     {
-        //
+ 
+        $options = [
+            ['option_id' => $request->optionId1, 'content' => $request->content1, 'is_correct' => $request->isCorrect1],
+            ['option_id' => $request->optionId2, 'content' => $request->content2, 'is_correct' => $request->isCorrect2],
+            ['option_id' => $request->optionId3, 'content' => $request->content3, 'is_correct' => $request->isCorrect3],
+            ['option_id' => $request->optionId4, 'content' => $request->content4, 'is_correct' => $request->isCorrect4],
+        ];
+        // dd($options);
+        $quiz = Quiz::findOrFail($quizId);
+        $quiz->question = $request->question;
+        $quiz->explanation = $request->explanation;
+        $quiz->save();
+
+        foreach ($options as $option) {
+            $updateOption = Option::findOrFail($option['option_id']);
+            $updateOption->content = $option['content'];
+            $updateOption->is_correct = $option['is_correct'];
+            $updateOption->save();
+        }
+
+        return redirect()->route('admin.categories.show', ['categoryId' => $categoryId]);
     }
 
     /**
