@@ -13,4 +13,10 @@ class PlayController extends Controller
         $categories = Category::all();
         return view('play.top', compact('categories'));
     }
+
+    public function categories(Request $request, string $categoryId)
+    {
+        $category = Category::withCount('quizzes')->findOrFail($categoryId);
+        return view('play.start', compact('category'));
+    }
 }
